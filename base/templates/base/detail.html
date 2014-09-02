@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+
+{% block main_content %}
+
+    <section class="content">
+    <h2>{{ announcement.title }}</h2>
+    {{ announcement.body|safe }}
+    {%  if announcement.upload1 %}<p>Associated Files:</p>{% endif %}
+
+        <ul>
+        {% if announcement.upload1 %}<li><a href={{ announcement.upload1.url }}>{{ announcement.upload1_filename }}</a></li>{% endif %}
+        {% if announcement.upload2 %}<li><a href={{ announcement.upload2.url }}>{{ announcement.upload2_filename }}</a></li>{% endif %}
+        {% if announcement.upload3 %}<li><a href={{ announcement.upload3.url }}>{{ announcement.upload3_filename }}</a></li>{% endif %}
+        </ul>
+
+    </section>
+{% endblock %}

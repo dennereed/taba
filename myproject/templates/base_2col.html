@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load fiber_tags %}
+{% load staticfiles %}
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>{% block title %}{{ fiber_page.title }}{% endblock %}</title>
+	<link rel="stylesheet" href="{% static 'base/base.css' %}">
+</head>
+<body class="{% block body_class %}{{ fiber_page.title|slugify }}{% endblock %}">
+	<div id="wpr-page">
+		<div id="page">
+			<header>
+                {% block logo %}
+                <div id="logo"><a href="{% url 'base.home' %}"><img id="logo_image" src="{% static 'paleoanthro_images/skull_grey150.jpg' %}"></a>Paleoanthropology Society</div>
+                {% endblock %}
+
+				<nav id="mainmenu" class="clearfix">
+					{% show_menu "mainmenu" 1 1 %}
+				</nav>
+			</header>
+			<aside id="aside-left">
+				<nav id="submenu">
+					{% show_menu "mainmenu" 2 3 %}
+                    {% block nav_content %}{% endblock %}
+				</nav>
+                {% show_page_content "aside-upper-left" %}
+                {% show_page_content "aside-lower-left" %}
+                <div class="button"><a href="/home/join">JOIN!</a></div>
+			</aside>
+			<section id="main">
+				<nav id="breadcrumbs" class="clearfix">
+					<ul>
+						{% for fiber_page in fiber_current_pages %}
+						<li>
+							<a href="{{ fiber_page.get_absolute_url }}">{{ fiber_page.title }}</a>
+						</li>
+						{% endfor %}
+					</ul>
+				</nav>
+				<article>
+					{% show_page_content "main" %}
+                    {% block main_content %}{% endblock %}
+                    {% show_page_content "main_bottom" %}
+				</article>
+			</section>
+
+		</div>
+	</div>
+</body>
+</html>

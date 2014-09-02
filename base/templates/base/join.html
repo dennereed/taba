@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load fiber_tags%}
+
+{% block main_content %}
+
+<section class="content">
+    <table>
+        <tr bgcolor="#DDD">
+            <td>Society Membership</td>
+            <td>$20</td>
+            <td><form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                    <input type="hidden" name="cmd" value="_xclick">
+                    <input type="hidden" name="business" value="Eric.Delson@lehman.cuny.edu">
+                    <input type="hidden" name="item_name" value="Joining">
+                    <input type="hidden" name="item_number" value="001">
+                    <input type="hidden" name="amount" value="20.00">
+                    <input type="hidden" name="no_note" value="1">
+                    <input type="hidden" name="currency_code" value="USD">
+                    <input type="hidden" name="lc" value="US">
+                    <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but02.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" width="62" height="31">
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>Meeting Registration</td>
+            <td>$40</td>
+            <td>
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                    <input type="hidden" name="cmd" value="_xclick">
+                    <input type="hidden" name="business" value="Eric.Delson@lehman.cuny.edu">
+                    <input type="hidden" name="item_name" value="Meeting Registration">
+                    <input type="hidden" name="item_number" value="001">
+                    <input type="hidden" name="amount" value="40.00">
+                    <input type="hidden" name="no_note" value="1">
+                    <input type="hidden" name="currency_code" value="USD">
+                    <input type="hidden" name="lc" value="US">
+                    <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but02.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" width="62" height="31">
+                </form>
+            </td>
+        </tr>
+        <tr bgcolor="#DDD">
+            <td>Society Membership and Meeting Registration</td>
+            <td>$60</td>
+            <td>
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                    <input type="hidden" name="cmd" value="_xclick">
+                    <input type="hidden" name="business" value="Eric.Delson@lehman.cuny.edu">
+                    <input type="hidden" name="item_name" value="Joining and Meeting Registration">
+                    <input type="hidden" name="item_number" value="001">
+                    <input type="hidden" name="amount" value="60.00">
+                    <input type="hidden" name="no_note" value="1">
+                    <input type="hidden" name="currency_code" value="USD">
+                    <input type="hidden" name="lc" value="US">
+                    <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but02.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" width="62" height="31">
+                </form>
+            </td>
+        </tr>
+    </table>
+</section>
+{% endblock %}

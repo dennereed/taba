@@ -13,6 +13,8 @@ import os
 import local_settings
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+gettext = lambda s: s
+PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -38,6 +40,24 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Django Fiber Apps
+    'django.contrib.staticfiles',
+    'mptt',
+    'compressor',
+    'easy_thumbnails',
+    'fiber',
+
+    # Additional 3rd party apps
+    'ckeditor',
+    'captcha',
+
+    # Project Apps
+    'base',  # main site app
+    #'meetings',  # meetings app
+    #'journal',  # paleoanthro journal app
+    #'dissertations',  # dissertation app
+    #'members',  # membership app
 )
 
 MIDDLEWARE_CLASSES = (
@@ -60,7 +80,7 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'taba.sqlite3'),
     }
 }
 
@@ -81,4 +101,66 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = local_settings.STATIC_URL
+STATIC_ROOT = local_settings.STATIC_ROOT
+TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# Example: "/home/media/media.lawrence.com/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash.
+# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
+MEDIA_URL = "/media/"
+
+
+##############################
+## Django ckeditor Settings ##
+##############################
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_IMAGE_BACKEND = "pillow"
+
+
+###########################
+## Django Fiber Settings ##
+###########################
+import django.conf.global_settings as DEFAULT_SETTINGS
+
+# Overides Middleware Classes defined above
+MIDDLEWARE_CLASSES = DEFAULT_SETTINGS.MIDDLEWARE_CLASSES + (
+    'fiber.middleware.ObfuscateEmailAddressMiddleware',
+    'fiber.middleware.AdminPageMiddleware',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
+    'django.core.context_processors.request',
+)
+
+
+"""
+Added to appropriate section above
+INSTALLED_APPS = (
+    ...
+    'django.contrib.staticfiles',
+    'mptt',
+    'compressor',
+    'easy_thumbnails',
+    'fiber',
+    ...
+)
+"""
+
+# import os  # Already imported above
+# BASE_DIR = os.path.abspath(os.path.dirname(__file__)) # Already defined above
+
+# STATIC_URL = '/static/' # Already defined above
+STATICFILES_FINDERS = DEFAULT_SETTINGS.STATICFILES_FINDERS + (
+    'compressor.finders.CompressorFinder',
+)
+
+####################################
+## Django Simple Captcha Settings ##
+####################################
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+CAPTCHA_NOISE_FUNCTIONS = []
