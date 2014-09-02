@@ -54,7 +54,7 @@ INSTALLED_APPS = (
 
     # Project Apps
     'base',  # main site app
-    #'meetings',  # meetings app
+    'meetings',  # meetings app
     #'journal',  # paleoanthro journal app
     #'dissertations',  # dissertation app
     #'members',  # membership app
