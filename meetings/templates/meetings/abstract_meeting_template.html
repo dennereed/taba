@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Paleoanthropology Society Meeting Abstracts</title>
+    <style>
+        h1,h2,h3,h4,body,p {font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif}
+        h1 {font-size: 14pt}
+        body {font-size: 8pt; max-width: 6.5in}
+        h1 p{margin-top: 8pt}
+        .space { margin-top: 32pt}
+    </style>
+</head>
+<body>
+
+{% for row in data|dictsort:"authors" %}
+    <h1 class="space">{{ row.authors }}<br>
+    {{ row.title|safe }}</h1>
+    {{ row.abstract_text|safe }}
+{% endfor %}
+</body>
+</html>

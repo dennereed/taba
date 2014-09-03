@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load fiber_tags%}
+
+{% block main_content %}
+    <div class="center"><img id="square" class="center" /> <img id="square" class="center" /> <img id="square" class="center" /></div>
+    <p>&nbsp;</p>
+    <section class="content">
+        {% if meeting_list %}
+
+                <div class="content">
+                <table>
+                    <tr>
+                        <th>Year</th><th>Location</th><th>Assoc.</th><th>Program</th><th>Abstracts</th>
+                    </tr>
+
+                    {% for meeting in meeting_list %}
+                        <tr bgcolor="{% cycle '#DDD' '#FFF' %}">
+                            <td>{{ meeting.year }}</td>
+                            <td>
+                                {% if meeting.has_detail %}
+                                <a href="{% url 'meetings:meeting_detail' year=meeting.year %}">{{ meeting.location }}</a>
+                                {% else %}
+                                    {{ meeting.location }}
+                                {% endif %}
+
+                            </td>
+                            <td>{{ meeting.associated_with }}</td>
+                            <td>
+                                {% if meeting.program_pdf %}
+                                <a href="{{ meeting.program_pdf.url }}">program</a>
+                                    {% else %}--
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if meeting.abstracts_pdf %}
+                                <a href="{{ meeting.abstracts_pdf.url }}">abstracts</a>
+                                    {% else %}--
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                </div>
+
+        {% else %}
+            <p>There are no meetings.</p>
+        {% endif %}
+    </section>
+{% endblock %}
+
+{% comment%}
+TODO Add the rest of the links to pdf files
+TODO Change table CSS
+TODO Highlight current year
+{% endcomment %}

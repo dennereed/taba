@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load fiber_tags%}
+
+{% block main_content %}
+    <section class="content">
+
+
+    {% if abstract_list %}
+        <h1>Podium Abstracts</h1>
+        <p></p>
+
+        {% for abstract in abstract_list|dictsort:"title"  %}
+            {% if abstract.presentation_type == 'Paper' %}
+                <h3>{{ abstract.title|safe|removetags:"p" }}</h3>
+                <p>
+               {% for author in abstract.author_set.all  %}
+                    {% if forloop.last %}
+                        {{ author.full_name }}
+                    {% else %}
+                        {{ author.full_name }},
+                    {% endif %}
+                {% endfor %}
+                </p>
+
+            {% endif %}
+        {% endfor %}
+
+        <h1>Poster Abstracts</h1>
+        <p></p>
+
+        {% for abstract in abstract_list|dictsort:"title" %}
+            {% if abstract.presentation_type == 'Poster' %}
+                <h3>{{ abstract.title|safe|removetags:"p"}}</h3>
+                <p>
+                {% for author in abstract.author_set.all  %}
+                    {% if forloop.last %}
+                        {{ author.name }}<br>
+                    {% else %}
+                        {{ author.name }},
+                    {% endif %}
+                {% endfor %}
+
+                {% if abstract.abstract_media %}
+                <a href="{{ abstract.abstract_media.url }}">download poster</a>
+                {% endif %}
+                </p>
+            {% endif %}
+        {% endfor %}
+
+    {% endif %}
+    </section>
+{% endblock %}
+

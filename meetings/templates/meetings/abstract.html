@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load fiber_tags%}
+
+{% block main_content %}
+    <section class="content">
+        <h1>Abstract Submission</h1>
+        <p></p>
+
+        {% comment %}
+        {% if 'error_message' %}
+        <p class="error">{{ error_message }}</p>
+        {% endif %}
+        {% endcomment %}
+
+        <form action="" method="post">{% csrf_token %}
+            {{ form.as_p }}
+
+        {%  comment %}
+            <p class="content">Confirm email: <br>
+                <input type="text" name="validate_email" size=60>{{ validate_email }} </p>
+                {% endcomment %}
+
+            <hr>
+
+            {{ author_formset.management_form }}
+            <p>List authors as they should appear in the program. Please use full first name. If there are multiple
+            institutional affiliations, add them to the comments box above.
+            Please DO NOT use all capital for author names and titles.
+            </p>
+
+            {% for form in author_formset %}
+                <p>Author {% cycle 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 as author_rank %}<br>
+                    {{ form.as_p }}
+                &nbsp;</p>
+            {% endfor %}
+
+            <input title="Add more authors" type="submit" value="Add More Authors" name='add_authors' value='add'/>
+            <p>&nbsp;</p>
+            <input type="submit" value="Submit Abstract" class="button"/>
+            <p>&nbsp;</p>
+
+        </form>
+    </section>
+{% endblock %}
+

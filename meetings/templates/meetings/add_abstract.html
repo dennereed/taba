@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+<table>
+{% if 'error_message' %}
+<tr><td colspan=3 align = center class="error">{{error_message}}</td></tr>
+{% endif %}
+
+<tr><td colspan=3 align = center><b>The deadline for abstracts is 2 Dec</b></td></tr>
+<tr><td colspan=3 align = left>
+	<p>
+	To submit an abstract for the Paleoanthropology Society meetings, please
+complete the following form.  When it is complete, click on the "Submit Abstract"
+button at the bottom of the page.  Your abstract will be sent to the Paleoanthropology Society and you will
+receive a copy.  If you need to revise your abstract, please complete this form
+once again, add a note in the comments field saying which abstract you are revising,
+and re-submit.
+	<br><br></p>
+
+
+</td></tr>
+<form action="/meetings/abstract/add/" method="post">{% csrf_token %}
+
+<tr><td colspan=3 align = center><b>Abstract Information</b></td></tr>
+<tr><td colspan=3 align = center>Note that the on-line submission process may result in some loss of formatting
+	(particularly italics). Abstracts that are accepted will be edited. If for some reason you have trouble using this form, please
+      contact Denn&eacute Reed <a href="mailto:reedd@austin.utexas.edu">
+      reedd@austin.utexas.edu</a>.</td></tr>
+<tr><td>&nbsp;</td><td colspan=2 align = left></td></tr>
+
+{{ abstract_form }}
+
+    <tr><td>&nbsp;</td></tr>
+<tr><td>&nbsp;<br></td></tr>
+<tr><td colspan=3 align = center><b>Author Information</b></td></tr>
+
+<tr><td colspan=3 align = center>List authors as they should
+appear in the program. Please use full first name. If there are multiple
+institutional affiliations, add them to the comments box above.
+Please DO NOT use all capital for author names and titles.
+</td></tr>
+
+<tr><td>&nbsp;<br></td></tr>
+
+{{ author_formset.management_form }}
+
+{% for form in author_formset %}
+	<tr><td>Author {% cycle 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 %}</td></tr>
+	{{ form }}
+	<tr><td>&nbsp;<br></td></tr>
+{% endfor %}
+
+<tr><td><input title="Add more authors" type="submit" value="Add More Authors" name='add_authors' value='add'/></td></tr>
+
+
+<tr><td>&nbsp;<br></td></tr>
+<tr><td><input type="submit" value="Submit Abstract" /></td></tr>
+</form>
+
+</table>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load fiber_tags%}
+
+{% block main_content %}
+    <section class="content">
+        <h2>{{ meeting.title }}</h2>
+    {% if meeting.start_date %}<p>{{ meeting.start_date }} - {{ meeting.end_date }}</p>{% endif %}
+    <p>{{ meeting.location }}</p>
+
+
+    {% if meeting.abstract_set.all %}
+        <h1>Podium Abstracts</h1>
+        <p></p>
+
+        {% for abstract in meeting.abstract_set  %}
+            {{ forloop.counter }}.
+            {% if abstract.presentation_type == 'Paper' %}
+                <h3>{{ abstract.title }}</h3>
+                <p>
+               {% for author in abstract.author_set.all  %}
+                    {% if forloop.last %}
+                        {{ author.full_name }}
+                    {% else %}
+                        {{ author.full_name }},
+                    {% endif %}
+                {% endfor %}
+                </p>
+
+            {% endif %}
+        {% endfor %}
+
+        <h1>Poster Abstracts</h1>
+        <p></p>
+
+        {% for abstract in meeting.abstract_set.all %}
+            {% if abstract.presentation_type == 'Poster' %}
+                <h3>{{ abstract.title }}</h3>
+                <p>
+                {% for author in abstract.author_set.all  %}
+                    {% if forloop.last %}
+                        {{ author.name }}
+                    {% else %}
+                        {{ author.name }},
+                    {% endif %}
+                {% endfor %}
+                </p>
+                {{ abstract.abstract_text|safe }}
+                {% if abstract.abstract_media %}
+                <a href="{{ abstract.abstract_media }}">download poster</a>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+    {% endif %}
+    </section>
+{% endblock %}
+
