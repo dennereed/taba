@@ -79,16 +79,13 @@ class Meeting(models.Model):
 
 # Variable assignments for Abstract model #
 
-PRESENTATION_TYPE_HELP = """(Please evaluate your material carefully and decide whether a
-                          paper or poster is most appropriate. Papers and posters are
-                          presented in separate, non-concurrent sessions.)"""
+PRESENTATION_TYPE_HELP = """(Please evaluate your abstract carefully and decide whether a
+                          paper or poster is most appropriate.)"""
 ABSTRACT_TEXT_HELP = "(Abstracts are limited to 300 words not counting acknowledgements. They must be in English.)"
-REFERENCES_HELP = "(Include references only if they are cited in your abstract. Please follow the " \
-                  "<a href='/static/pdfs/PaleoAnthropology%20Guidelines_articles.pdf'>journal&apos;s </a>format)"
+REFERENCES_HELP = "(Include references only if they are cited in your abstract.)"
 COMMENTS_HELP = "(Please include any factors that should be included in an evaluation of this abstract. " \
                 "For instance, if this paper is not substantially different from a recently given paper it may " \
                 "be rejected. Thus, you might want to make clear how this paper differs.)"
-FUNDING_HELP = "Check this box if you would like to be considered for partial funding."
 
 
 class Abstract(models.Model):
@@ -101,9 +98,9 @@ class Abstract(models.Model):
     acknowledgements = models.TextField(null=True, blank=True)
     references = models.TextField(null=True, blank=True, help_text=REFERENCES_HELP)
     comments = models.TextField(null=True, blank=True, help_text=COMMENTS_HELP)
-    funding = models.BooleanField(default=False, help_text=FUNDING_HELP)
+    #funding = models.BooleanField(default=False)
     year = models.IntegerField(null=False, blank=False)  # REQUIRED. TODO This field is redundant w/meeting field.
-    last_modified = models.DateField(null=False, blank=True, auto_now_add=True, auto_now=True)  # REQUIRED BUT AUTOMATIC
+    last_modified = models.DateField(null=False, blank=True, auto_now=True)  # REQUIRED BUT AUTOMATIC
     created = models.DateField(null=False, blank=True, auto_now_add=True)  # REQUIRED BUT AUTOMATIC
     abstract_rank = models.IntegerField(null=True, blank=True)
     abstract_media = models.FileField(upload_to="meetings/files", null=True, blank=True)
@@ -121,7 +118,7 @@ class Author(models.Model):
     author_rank = models.IntegerField()  # REQUIRED
     last_name = models.CharField(null=True, blank=True, max_length=200)
     first_name = models.CharField(null=True, blank=True, max_length=200)
-    name = models.CharField(max_length=200)  # REQUIRED
+    name = models.CharField('Full Name', max_length=200)  # REQUIRED
     department = models.CharField(max_length=200, null=True, blank=True)
     institution = models.CharField(max_length=200, null=True, blank=True)
     country = models.CharField(max_length=200, choices=COUNTRY_CHOICES, null=True, blank=True)

@@ -87,8 +87,8 @@ class AbstractCreateView(FiberPageMixin, generic.CreateView):
         self.object = None
         form_class = self.get_form_class()
         form = self.get_form(form_class)
-        form.meeting_id = 24
-        form.year = 2015
+        form.meeting_id = 1
+        form.year = 2016
         author_formset = AuthorInlineFormSet(self.request.POST)
         if (form.is_valid() and author_formset.is_valid()):
             return self.form_valid(form, author_formset)
@@ -174,7 +174,7 @@ def create_abstract(request):
                           })
 
         #If submitting the form ...
-        abstract = Abstract(year='2015', meeting_id=24)  # set the abstract year
+        abstract = Abstract(year='2016', meeting_id=1)  # set the abstract year
         abstract_form = AbstractForm(request.POST, instance=abstract)  # create a form instance that includes the year
 
         # validate the abstract information (not authors yet)

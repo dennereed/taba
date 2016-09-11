@@ -42,7 +42,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # Django Fiber Apps
-    'django.contrib.staticfiles',
     'mptt',
     'compressor',
     'easy_thumbnails',
@@ -61,6 +60,8 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'fiber.middleware.ObfuscateEmailAddressMiddleware',
+    'fiber.middleware.AdminPageMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -128,10 +129,10 @@ CKEDITOR_IMAGE_BACKEND = "pillow"
 import django.conf.global_settings as DEFAULT_SETTINGS
 
 # Overides Middleware Classes defined above
-MIDDLEWARE_CLASSES = DEFAULT_SETTINGS.MIDDLEWARE_CLASSES + (
-    'fiber.middleware.ObfuscateEmailAddressMiddleware',
-    'fiber.middleware.AdminPageMiddleware',
-)
+# MIDDLEWARE_CLASSES = DEFAULT_SETTINGS.MIDDLEWARE_CLASSES + (
+#     'fiber.middleware.ObfuscateEmailAddressMiddleware',
+#     'fiber.middleware.AdminPageMiddleware',
+# )
 
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
     'django.core.context_processors.request',

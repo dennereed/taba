@@ -9,9 +9,9 @@ from captcha.fields import CaptchaField
 # Abstract Model Form
 class AbstractForm(ModelForm):
     confirm_email = forms.EmailField(widget=TextInput(attrs={'size': 60}))
-    meeting = forms.ModelChoiceField(queryset=Meeting.objects.filter(year__exact=2015), empty_label=None)
-    year = forms.IntegerField(widget=HiddenInput, initial=2015)
-    human_test = CaptchaField(help_text='Enter the solution')
+    meeting = forms.ModelChoiceField(queryset=Meeting.objects.filter(year__exact=2016), empty_label=None)
+    year = forms.IntegerField(widget=HiddenInput, initial=2016)
+    #human_test = CaptchaField(help_text='Enter the solution')
 
     class Meta:
         model = Abstract
@@ -23,11 +23,9 @@ class AbstractForm(ModelForm):
             'abstract_text',
             'acknowledgements',
             'references',
-            'funding',
             'comments',
             'contact_email',
             'confirm_email',
-            'human_test'
         )
 
         widgets = {
@@ -45,6 +43,11 @@ class AbstractForm(ModelForm):
 class AuthorForm(ModelForm):
     class Meta:
         model = Author
+        fields = (
+            'abstract',
+            'author_rank', 'last_name', 'first_name', 'name', 'department',  'institution',
+            'country', 'email_address',
+        )
 
 # generate an inline formset for authors, exclude author rank field,
 # which the view will add automatically. Show three blank author forms

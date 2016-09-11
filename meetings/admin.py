@@ -83,6 +83,7 @@ class AbstractAdminForm(forms.ModelForm):
         model = Abstract
         #widgets = {'title': TextInput(attrs={'size': 120, })}
         widgets = {'title': Textarea(attrs={'cols': 80, 'rows': 2})}
+        exclude = ()
 
 
 class AbstractAdmin(admin.ModelAdmin):
