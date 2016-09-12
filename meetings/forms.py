@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from models import Abstract, Author, Meeting
 from django.forms.models import inlineformset_factory
-from django.forms.widgets import Textarea, TextInput, HiddenInput
+from django.forms.widgets import Textarea, TextInput, HiddenInput, EmailInput
 from django import forms
 from captcha.fields import CaptchaField
 
@@ -23,6 +23,8 @@ class AbstractForm(ModelForm):
             self.add_error('contact_email', msg)
             self.add_error('confirm_email', msg)
 
+
+
     class Meta:
         model = Abstract
         fields = (
@@ -39,7 +41,8 @@ class AbstractForm(ModelForm):
         )
 
         widgets = {
-            'contact_email': TextInput(attrs={'size': 60, }),
+            'contact_email': EmailInput(attrs={'size': 60, }),
+            'confirm_email': EmailInput(attrs={'size': 60, }),
 
             'title': Textarea(attrs={'cols': 60, 'rows': 2}),
             'abstract_text': Textarea(attrs={'cols': 60, 'rows': 20}),
