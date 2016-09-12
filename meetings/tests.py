@@ -10,10 +10,10 @@ def create_django_page_tree():
     mainmenu.save()
     home=Page(title='home', parent=mainmenu, url='home', template_name='base/home.html')
     home.save()
-    join=Page(title='join', parent=home, url='join', template_name='base/join.html')
-    join.save()
-    members=Page(title='members', parent=home, url='members', template_name='base/members')
-    members.save()
+    # join=Page(title='join', parent=home, url='join', template_name='base/join.html')
+    # join.save()
+    # members=Page(title='members', parent=home, url='members', template_name='base/members')
+    # members.save()
     meetings = Page(title='meetings', parent=mainmenu, url='meetings', template_name='')
     meetings.save()
 
@@ -143,7 +143,7 @@ class MeetingsViewTests(TestCase):
         self.assertContains(response, '<a href="/meetings/2014/"')  # contains a link to the 2014 meeting detail
         self.assertContains(response, '<a href="/meetings/2015/"')
         self.assertContains(response, '<a href="/meetings/2016/"')
-        self.assertEqual(Page.objects.count(), 8)  # should have 8 fiber pages
+        self.assertEqual(Page.objects.count(), 6)  # should have 8 fiber pages
         self.assertEqual(Meeting.objects.count(), 3)  # should hav 3 meetings
 
         atlanta_fp = Page.objects.get(url__exact=2016)  # Get Atlanta fiber page
@@ -165,22 +165,27 @@ class MeetingsViewTests(TestCase):
 
 
 class MeetingsDetailViewTests(TestCase):
-    fixtures = ['fiber_page_data.json', 'meetings_data_140408.json']
+    fixtures = ['fiber_data_160911.json', 'meetings_data.json']
 
     def test_meetings_detail_view(self):
-        response = self.client.get(reverse('meetings:meeting_detail', args=[2014]))
+        # Key Error for the next line likely indicates that the fiber page is missing
+        response = self.client.get(reverse('meetings:meeting_detail', args=[2016]))
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Create an Abstract")
 
 
 class AbstractCreateViewTests(TestCase):
     # load test data that includes fiber pages, meetings, abstracts etc.
-    fixtures = ['fiber_page_data.json', 'meetings_data_140408.json']
+    fixtures = ['fiber_data_160911.json', 'meetings_data.json']
 
     def test_sanity(self):
-        self.assertEqual(Meeting.objects.count(), 26)
-        self.assertEqual(Abstract.objects.count(), 83)
-        san_francisco = Meeting.objects.get(pk=24)
-        self.assertEqual(san_francisco.location, 'San Francisco, CA')
+        self.assertEqual(Meeting.objects.count(), 2)
+        starting_abstract_count = Abstract.objects.count()
+        self.assertEqual(starting_abstract_count, 5)
+        starting_author_count = Author.objects.count()
+        self.assertEqual(starting_author_count, 6)
+        austin2016 = Meeting.objects.get(pk=1)
+        self.assertEqual(austin2016.location, 'Austin, TX')
         new_abstract = Abstract(meeting_id=24, contact_email='denne.reed@gmail.com', presentation_type='Paper',
                                 title='Silly Walks of the Neanderthals',
                                 abstract_text="""<p> Test abstract text about silly walks in Neanderthals.</p> """,
@@ -191,8 +196,8 @@ class AbstractCreateViewTests(TestCase):
                             department="Anthropology", country="United States of America",
                             email_address="denne.reed@gmail.com")
         new_author.save()
-        self.assertEqual(Abstract.objects.count(), 84)  # Now there should be 84 abstracts
-        self.assertEqual(Author.objects.count(), 304)  # and 304 authors
+        self.assertEqual(Abstract.objects.count(), starting_abstract_count+1)
+        self.assertEqual(Author.objects.count(), starting_author_count+1)
 
     def test_abstract_create_view_with_get(self):
         """A get request should load a blank version of the form"""
@@ -201,7 +206,7 @@ class AbstractCreateViewTests(TestCase):
         self.assertTemplateUsed(response, 'meetings/abstract.html')  # Response should render the abstract.html template
         self.assertContains(response, "<form")  # Test that the page loads a form
         self.assertContains(response, "<p>Author 1<br>")  # Test that the page contains an author formset
-        #self.assertContains(response, "input", count=37)  # Test that the page contains 37 input elements
+        self.assertContains(response, "input", count=34)  # Test that the page contains 34 input elements
 
     # def test_abstract_create_view_with_empty_post(self):
     #     response = self.client.post(reverse('meetings:create_abstract'), {})
