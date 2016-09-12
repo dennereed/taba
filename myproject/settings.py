@@ -24,11 +24,11 @@ PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 SECRET_KEY = local_settings.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = local_settings.DEBUG
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = local_settings.ALLOWED_HOSTS
 
 
 # Application definition
@@ -54,13 +54,11 @@ INSTALLED_APPS = (
     # Project Apps
     'base',  # main site app
     'meetings',  # meetings app
-    #'journal',  # paleoanthro journal app
-    #'dissertations',  # dissertation app
-    #'members',  # membership app
+
 )
 
 MIDDLEWARE_CLASSES = (
-    'fiber.middleware.ObfuscateEmailAddressMiddleware',
+    'fiber.middleware.ObfuscateEmailAddressMiddleware',  # fiber middleware needs to be listed first
     'fiber.middleware.AdminPageMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -115,6 +113,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = "/media/"
 
+CRSF_COOKIE_SECURE = local_settings.CRSF_COOKIE_SECURE
+SESSION_COOKIE_SECURE = local_settings.SESSION_COOKIE_SECURE
 
 ##############################
 ## Django ckeditor Settings ##
