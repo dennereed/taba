@@ -13,6 +13,16 @@ class AbstractForm(ModelForm):
     year = forms.IntegerField(widget=HiddenInput, initial=2016)
     #human_test = CaptchaField(help_text='Enter the solution')
 
+    def clean(self):
+        cleaned_data = super(AbstractForm, self).clean()
+        contact_email = cleaned_data.get('contact_email')
+        confirm_email = cleaned_data.get('confirm_email')
+
+        if contact_email != confirm_email:
+            msg = 'Emails do not match'
+            self.add_error('contact_email', msg)
+            self.add_error('confirm_email', msg)
+
     class Meta:
         model = Abstract
         fields = (
