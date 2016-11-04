@@ -28,7 +28,7 @@
         <h1>Poster Abstracts</h1>
         <p></p>
 
-        {% for abstract in abstract_list|dictsort:"title" %}
+        {% for abstract in abstract_list|dictsort:"abstract_rank" %}
             {% if abstract.presentation_type == 'Poster' %}
                 <h3>{{ abstract.title|safe|removetags:"p"}}</h3>
                 <p>
