@@ -89,7 +89,7 @@ class AbstractAdminForm(forms.ModelForm):
 class AbstractAdmin(admin.ModelAdmin):
     list_display = ('id', 'contact_email', 'presentation_type', 'title', 'year', 'abstract_rank', 'accepted')
     list_display_links = ['id', 'title']
-    list_editable = ['accepted', ]
+    list_editable = ['accepted', 'abstract_rank']
     list_filter = ['year', 'presentation_type', 'abstract_rank', 'accepted']
     search_fields = ['title', 'author__name']
     form = AbstractAdminForm

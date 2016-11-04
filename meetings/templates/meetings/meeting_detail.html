@@ -9,7 +9,7 @@
         <h1>Podium Abstracts</h1>
         <p></p>
 
-        {% for abstract in abstract_list|dictsort:"title"  %}
+        {% for abstract in abstract_list|dictsort:"abstract_rank"  %}
             {% if abstract.presentation_type == 'Paper' %}
                 <h3>{{ abstract.title|safe|removetags:"p" }}</h3>
                 <p>

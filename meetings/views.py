@@ -30,7 +30,7 @@ class MeetingsDetailView(FiberPageMixin, generic.ListView):
         #abstract_list.sort(key=lambda x: x.author_set.order_by('author_rank')[0].last_name)
         # TODO Add ajax to access absrtact text inline
         return Abstract.objects.select_related().filter(meeting__year__exact=self.kwargs['year'],
-                                                        accepted__exact=True).order_by('title')
+                                                        accepted__exact=True).order_by('abstract_rank')
 
     # Fetch corresponding fiber page content
     # In this view there is a separate fiber page for
