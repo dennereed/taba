@@ -32,30 +32,60 @@ def create_abstract_csv(modeladmin, request, queryset):
 create_abstract_csv.short_description = "Download .csv"
 
 
+# def create_abstract4meeting_html(modeladmin, request, queryset):
+#     abstracts=queryset
+#     for abstract in abstracts:
+#         abstract.authors = abstract.author_set.all().order_by("author_rank")
+#         if len(abstract.authors) > 2:
+#             try:
+#                 abstract.authors = abstract.authors[0].name.split()[-1]+" et al."  # get the last name
+#             except IndexError:
+#                 abstract.authors = abstract.authors[0].name.split()[0]+" et al."
+#         if len(abstract.authors) == 2:
+#             try:
+#                 abstract.authors = abstract.authors[0].name.split()[-1]+" and "+abstract.authors[1].name.split()[-1]
+#             except IndexError:
+#                 abstract.authors = abstract.authors[0].name.split()[0]+" and "+abstract.authors[1].name.split()[0]
+#         if len(abstract.authors) == 1:
+#             try:
+#                 abstract.authors = abstract.authors[0].name.split()[-1]  # get the last name
+#             except IndexError:
+#                 abstract.authors = abstract.authors[0].name.split()[0]  # get the last name
+#
+#     response = HttpResponse(content_type='text/csv')
+#     response['Content-Disposition'] = 'attachment; filename="PaleoAnthro_abstracts_for_meeting.html"'
+#     t=loader.get_template("meetings/abstract_meeting_template.html")
+#     c=Context({
+#         'data': abstracts,
+#     })
+#     response.write(t.render(c))
+#     return response
+# create_abstract4meeting_html.short_description = "Download .html for meeting"
+
 def create_abstract4meeting_html(modeladmin, request, queryset):
-    abstracts=queryset
+    abstracts = queryset.order_by('abstract_rank')
     for abstract in abstracts:
-        abstract.authors=abstract.author_set.all().order_by("author_rank")
-        if len(abstract.authors) > 2:
-            try:
-                abstract.authors = abstract.authors[0].name.split()[-1]+" et al."  # get the last name
-            except IndexError:
-                abstract.authors = abstract.authors[0].name.split()[0]+" et al."
-        if len(abstract.authors) == 2:
-            try:
-                abstract.authors = abstract.authors[0].name.split()[-1]+" and "+abstract.authors[1].name.split()[-1]
-            except IndexError:
-                abstract.authors = abstract.authors[0].name.split()[0]+" and "+abstract.authors[1].name.split()[0]
-        if len(abstract.authors) == 1:
-            try:
-                abstract.authors = abstract.authors[0].name.split()[-1]  # get the last name
-            except IndexError:
-                abstract.authors = abstract.authors[0].name.split()[0]  # get the last name
+        abstract.authors = abstract.author_set.all().order_by("author_rank")
+        # if len(abstract.authors) > 2:
+        #     try:
+        #         abstract.authors = abstract.authors[0].name.split()[-1]+" et al."  # get the last name
+        #     except IndexError:
+        #         abstract.authors = abstract.authors[0].name.split()[0]+" et al."
+        # if len(abstract.authors) == 2:
+        #     try:
+        #         abstract.authors = abstract.authors[0].name.split()[-1]+" and "+abstract.authors[1].name.split()[-1]
+        #     except IndexError:
+        #         abstract.authors = abstract.authors[0].name.split()[0]+" and "+abstract.authors[1].name.split()[0]
+        # if len(abstract.authors) == 1:
+        #     try:
+        #         abstract.authors = abstract.authors[0].name.split()[-1]  # get the last name
+        #     except IndexError:
+        #         abstract.authors = abstract.authors[0].name.split()[0]  # get the last name
 
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="PaleoAnthro_abstracts_for_meeting.html"'
-    t=loader.get_template("meetings/abstract_meeting_template.html")
-    c=Context({
+    t = loader.get_template("meetings/abstract_meeting_template.html")
+    c = Context({
         'data': abstracts,
     })
     response.write(t.render(c))

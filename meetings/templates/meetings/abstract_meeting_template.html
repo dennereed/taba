@@ -3,19 +3,28 @@
 <head>
     <title>Paleoanthropology Society Meeting Abstracts</title>
     <style>
-        h1,h2,h3,h4,body,p {font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif}
+        h1,h2,h3,h4,body,p {font-family: "Times New Roman", Palatino, serif}
         h1 {font-size: 14pt}
-        body {font-size: 8pt; max-width: 6.5in}
+        body {font-size: 12pt; max-width: 6.5in}
         h1 p{margin-top: 8pt}
         .space { margin-top: 32pt}
     </style>
 </head>
 <body>
 
-{% for row in data|dictsort:"authors" %}
-    <h1 class="space">{{ row.authors }}<br>
-    {{ row.title|safe }}</h1>
-    {{ row.abstract_text|safe }}
+{% for row in data %}
+    <h1 class="space">{{ row.title|safe }}</h1>
+    <p>
+        {% for author in row.authors %}
+            {{ author.name }}<sup>{{ forloop.counter }}</sup>{% if not forloop.last %}, {% endif %}
+        {% endfor %}<br>
+    </p>
+    <p>
+     {% for author in row.authors %}
+            <sup>{{ forloop.counter }}</sup>{{ author.department }}, {{ author.institution }}{% if not forloop.last %}; {% endif %}
+     {% endfor %}
+    </p>
+    <p>{{ row.abstract_text|safe }}</p>
 {% endfor %}
 </body>
 </html>
