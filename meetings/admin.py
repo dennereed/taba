@@ -13,18 +13,18 @@ import unicodecsv
 
 def create_abstract_csv(modeladmin, request, queryset):
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="PaleoAnthro_abstracts.csv"'
+    response['Content-Disposition'] = 'attachment; filename="taba_abstracts.csv"'
     writer = unicodecsv.writer(response)
     writer.writerow(['id', 'contact_email', 'presentation_type', 'title', 'abstract_text', 'acknowledgements',
-                     'references', 'comments', 'funding', 'year', 'abstract_rank', 'authors'])
+                     'references', 'comments', 'year', 'abstract_rank', 'authors'])
 
     for abstract in queryset.all():
-        author_list=[]
+        author_list = []
         for a in abstract.author_set.all().order_by('author_rank'):
             author_list.append(a.name)
         writer.writerow(
             [abstract.id, abstract.contact_email, abstract.presentation_type, abstract.title, abstract.abstract_text,
-             abstract.acknowledgements, abstract.references, abstract.comments, abstract.funding, abstract.year,
+             abstract.acknowledgements, abstract.references, abstract.comments, abstract.year,
              abstract.abstract_rank, ', '.join(author_list)]
         )
 
