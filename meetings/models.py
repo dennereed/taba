@@ -10,6 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 PRESENTATION_TYPE_CHOICES = (
     ('Paper', 'Paper'),
     ('Poster', 'Poster'),
+    ('Undergraduate Poster', 'Undergraduate Poster')
 )
 FUNDING_CHOICES = (
     ('True', 'Yes'),

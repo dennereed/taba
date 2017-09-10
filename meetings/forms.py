@@ -9,8 +9,8 @@ from captcha.fields import CaptchaField
 # Abstract Model Form
 class AbstractForm(ModelForm):
     confirm_email = forms.EmailField(widget=TextInput(attrs={'size': 60}))
-    meeting = forms.ModelChoiceField(queryset=Meeting.objects.filter(year__exact=2016), empty_label=None)
-    year = forms.IntegerField(widget=HiddenInput, initial=2016)
+    meeting = forms.ModelChoiceField(queryset=Meeting.objects.filter(year__exact=2017), empty_label=None)
+    year = forms.IntegerField(widget=HiddenInput, initial=2017)
     #human_test = CaptchaField(help_text='Enter the solution')
 
     def clean(self):
